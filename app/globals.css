@@ -1,1 +1,309 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ==========================================================================
+   FixItNow — Design Tokens & Global Styles
+   Palette rationale: workwear/toolbox vernacular instead of generic SaaS colors.
+   Navy = trust & trade professionalism. Signal orange = urgency ("Now"),
+   pulled from work-glove/hi-vis orange rather than a generic brand accent.
+   ========================================================================== */
+:root {
+  /* --- Brand palette --- */
+  --color-navy: #0f2540; /* primary — headers, navbar, footer bg */
+  --color-navy-700: #17324f; /* hover/raised surfaces on navy */
+  --color-steel: #4a6580; /* secondary text, borders, muted icons */
+  --color-steel-200: #c6d2da; /* light borders/dividers on mist bg */
+  --color-signal: #f2542d; /* accent — CTAs, "Now", active states */
+  --color-signal-600: #d8431f; /* accent hover/pressed */
+  --color-mist: #f5f3ef; /* app background */
+  --color-surface: #ffffff; /* cards, panels */
+  --color-ink: #16202b; /* body text */
+  --color-ink-muted: #5b6b78; /* secondary text */
+
+  /* --- Booking status badges (from the spec) --- */
+  --status-requested-bg: #fff1d6;
+  --status-requested-fg: #a15c00;
+  --status-accepted-bg: #dcebff;
+  --status-accepted-fg: #1e4e8c;
+  --status-declined-bg: #fbe0de;
+  --status-declined-fg: #b23a2e;
+  --status-paid-bg: #ebe0fa;
+  --status-paid-fg: #6b3fa0;
+  --status-inprogress-bg: #ddf3e4;
+  --status-inprogress-fg: #227a46;
+  --status-completed-bg: #e7e9ec;
+  --status-completed-fg: #45505a;
+  --status-cancelled-bg: #f5d9d9;
+  --status-cancelled-fg: #7a1f1f;
+
+  /* --- Type --- */
+  --font-display: "Barlow Semi Condensed", "Arial Narrow", Arial, sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+
+  /* --- Scale & shape --- */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --shadow-card:
+    0 1px 2px rgba(15, 37, 64, 0.06), 0 4px 16px rgba(15, 37, 64, 0.06);
+  --shadow-raised: 0 8px 24px rgba(15, 37, 64, 0.12);
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+/* Dark mode: flip surfaces, keep signal orange as the one constant accent */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-mist: #0b1620;
+    --color-surface: #12222f;
+    --color-ink: #eaeef1;
+    --color-ink-muted: #97a6b2;
+    --color-steel-200: #24384a;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  background: var(--color-ink-muted);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  color: var(--color-navy);
+  margin: 0 0 0.5em;
+}
+
+a {
+  color: var(--color-navy);
+  text-decoration: none;
+}
+
+/* Respect reduced-motion preference across the app */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Visible keyboard focus everywhere — don't rely on browser default */
+:focus-visible {
+  outline: 2px solid var(--color-signal);
+  outline-offset: 2px;
+}
+
+/* --- Reusable primitives --- */
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-steel-200);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+}
+
+.btn-primary {
+  background: var(--color-signal);
+  color: #ffffff;
+  font-family: var(--font-display);
+  font-weight: 700;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 0.6em 1.2em;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.btn-primary:hover {
+  background: var(--color-signal-600);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--color-navy);
+  border: 1.5px solid var(--color-steel-200);
+  border-radius: var(--radius-sm);
+  padding: 0.6em 1.2em;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* --- Status badges: map directly to the booking lifecycle --- */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  padding: 0.25em 0.7em;
+  border-radius: 999px;
+}
+.badge-requested {
+  background: var(--status-requested-bg);
+  color: var(--status-requested-fg);
+}
+.badge-accepted {
+  background: var(--status-accepted-bg);
+  color: var(--status-accepted-fg);
+}
+.badge-declined {
+  background: var(--status-declined-bg);
+  color: var(--status-declined-fg);
+}
+.badge-paid {
+  background: var(--status-paid-bg);
+  color: var(--status-paid-fg);
+}
+.badge-in-progress {
+  background: var(--status-inprogress-bg);
+  color: var(--status-inprogress-fg);
+}
+.badge-completed {
+  background: var(--status-completed-bg);
+  color: var(--status-completed-fg);
+}
+.badge-cancelled {
+  background: var(--status-cancelled-bg);
+  color: var(--status-cancelled-fg);
+}
+
+@theme inline {
+  --font-heading: var(--font-sans);
+  --font-sans: var(--font-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}
