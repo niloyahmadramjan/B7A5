@@ -121,10 +121,7 @@ h4 {
   margin: 0 0 0.5em;
 }
 
-a {
-  color: var(--color-navy);
-  text-decoration: none;
-}
+
 
 /* Respect reduced-motion preference across the app */
 @media (prefers-reduced-motion: reduce) {

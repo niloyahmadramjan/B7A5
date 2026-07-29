@@ -1,17 +1,9 @@
 "use server";
+import { LoginState, RegisterState } from "@/types/authtype";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-type LoginState = {
-  success: boolean;
-  statusCode: number;
-  message: string;
-  data: {
-    accessToken: string;
-    refreshToken: string;
-  };
-};
 
 export const loginAction = async (
   prevState: LoginState,
@@ -55,5 +47,28 @@ export const loginAction = async (
     } else if (decodedToken.role === "TECHNICIAN") {
       redirect("/technician-dashboard");
     }
+  return result;
+};
+
+
+export const registerAction = async (
+  prevState: RegisterState,
+  formData: FormData,
+) => {
+  const name = formData.get("name") as string;
+  const email = formData.get("email") as string;
+  const phone = formData.get("phone") as string;
+  const password = formData.get("password") as string;
+
+  const res = await fetch(`${process.env.BACKEND_API_URL}/api/auth/register`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({ name, email, phone, password }),
+  });
+
+  const result = await res.json();
+  console.log(result)
   return result;
 };
