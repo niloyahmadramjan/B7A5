@@ -1,6 +1,7 @@
 import ServicesList from "../_components/service/ServicesList";
 import { Suspense } from "react";
 import ServiceSkeleton from "../_components/service/ServiceSkeleton";
+import ServiceSearch from "../_components/service/ServiceSearch";
 
 // async function servicePage(searchParams: SearchParams: Promise<{[key: string]: string|string[]|undefined}>) {
 
@@ -15,6 +16,7 @@ async function servicePage({
       style={{ backgroundColor: "var(--color-mist)" }}
     >
       <div className="max-w-7xl mx-auto space-y-8">
+        <ServiceSearch />
         <Suspense fallback={<ServiceSkeleton />}>
           <ServicesList searchParams={searchParams} />
         </Suspense>
