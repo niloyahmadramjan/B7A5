@@ -1,63 +1,111 @@
 "use client";
 
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { MetaData } from "@/types/service";
 
 interface PaginationProps {
   meta: MetaData;
-  onPageChange: (newPage: number) => void;
 }
 
-export default function Pagination({ meta, onPageChange }: PaginationProps) {
-  const { page, totalPages } = meta;
+export default function Pagination({ meta }: PaginationProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-  if (totalPages <= 1) return null;
+  const changePage = (page: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    params.set("page", String(page));
+
+    router.replace(`${pathname}?${params.toString()}`);
+  };
+
+  if (meta.totalPages <= 1) return null;
 
   return (
-    <div className="flex items-center justify-center gap-2 mt-10">
-      {/* Previous Button */}
-      <button
-        onClick={() => onPageChange(page - 1)}
-        disabled={page === 1}
-        className="px-4 py-2 rounded-lg border text-sm font-semibold transition-all disabled:opacity-40 disabled:cursor-not-allowed hover:bg-white"
-        style={{
-          borderColor: "var(--color-steel-200)",
-          color: "var(--color-navy)",
-          backgroundColor: "var(--color-surface)",
-        }}
-      >
-        Previous
-      </button>
+    <div className="flex justify-end mt-10">
+      <div className="flex items-center gap-2">
+        {/* Previous */}
 
-      {/* Page Numbers */}
-      {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
         <button
-          key={pageNum}
-          onClick={() => onPageChange(pageNum)}
-          className={`w-10 h-10 rounded-lg text-sm font-bold transition-all ${
-            pageNum === page ? "text-white shadow-md" : "hover:bg-white text-gray-700"
-          }`}
+          disabled={meta.page === 1}
+          onClick={() => changePage(meta.page - 1)}
+          className="
+px-4
+py-2.5
+rounded-xl
+text-sm
+font-semibold
+border
+transition-all
+disabled:opacity-40
+disabled:cursor-not-allowed
+"
           style={{
-            backgroundColor: pageNum === page ? "var(--color-navy)" : "transparent",
-            borderColor: pageNum === page ? "transparent" : "var(--color-steel-200)",
+            backgroundColor: "var(--color-surface)",
+            borderColor: "var(--color-steel-200)",
+            color: "var(--color-ink)",
           }}
         >
-          {pageNum}
+          Previous
         </button>
-      ))}
 
-      {/* Next Button */}
-      <button
-        onClick={() => onPageChange(page + 1)}
-        disabled={page === totalPages}
-        className="px-4 py-2 rounded-lg border text-sm font-semibold transition-all disabled:opacity-40 disabled:cursor-not-allowed hover:bg-white"
-        style={{
-          borderColor: "var(--color-steel-200)",
-          color: "var(--color-navy)",
-          backgroundColor: "var(--color-surface)",
-        }}
-      >
-        Next
-      </button>
+        {/* Pages */}
+
+        {Array.from({ length: meta.totalPages }, (_, i) => i + 1).map(
+          (page) => (
+            <button
+              key={page}
+              onClick={() => changePage(page)}
+              className="
+w-10
+h-10
+rounded-xl
+text-sm
+font-bold
+transition-all
+"
+              style={{
+                backgroundColor:
+                  meta.page === page
+                    ? "var(--color-navy)"
+                    : "var(--color-surface)",
+
+                color: meta.page === page ? "black" : "var(--color-ink)",
+
+                border: "1px solid var(--color-steel-200)",
+              }}
+            >
+              {page}
+            </button>
+          ),
+        )}
+
+        {/* Next */}
+
+        <button
+          disabled={meta.page === meta.totalPages}
+          onClick={() => changePage(meta.page + 1)}
+          className="
+px-4
+py-2.5
+rounded-xl
+text-sm
+font-semibold
+border
+transition-all
+disabled:opacity-40
+disabled:cursor-not-allowed
+"
+          style={{
+            backgroundColor: "var(--color-surface)",
+            borderColor: "var(--color-steel-200)",
+            color: "var(--color-ink)",
+          }}
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 }

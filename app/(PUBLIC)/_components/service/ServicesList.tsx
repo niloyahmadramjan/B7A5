@@ -1,6 +1,7 @@
 import { getPublicServices } from "@/app/(PUBLIC)/_action/getServices";
 import ServiceCard from "./ServiceCard";
 import { ServiceItem } from "@/types/service";
+import Pagination from "./Pagination";
 
 export default async function ServiceGrid({
   searchParams,
@@ -11,12 +12,11 @@ export default async function ServiceGrid({
 //   console.log(query);
   const result = await getPublicServices({query});
   const service = result.data.data
-//   console.log(service)
-
 
   return (
     <>
       {result.success? (
+       <>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {service.map((service: ServiceItem) => (
             <ServiceCard
@@ -25,6 +25,8 @@ export default async function ServiceGrid({
             />
           ))}
         </div>
+        <Pagination meta={result.data.meta}/>
+       </>
       ) : (
         <div
           className="text-center py-16 px-4 rounded-2xl border"
