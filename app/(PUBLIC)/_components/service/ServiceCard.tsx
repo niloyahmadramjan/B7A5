@@ -17,6 +17,8 @@ export default function ServiceCard({ service }: ServiceCardProps) {
     return `${mins} mins`;
   };
 
+  console.log(service.technicianId, "from service card");
+
   return (
     <div
       className="flex flex-col justify-between p-6 rounded-2xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
@@ -45,7 +47,9 @@ export default function ServiceCard({ service }: ServiceCardProps) {
               <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
             </svg>
             <span>{service.rating ?? "4.9"}</span>
-            <span className="text-gray-400">({service.reviewsCount ?? 24})</span>
+            <span className="text-gray-400">
+              ({service.reviewsCount ?? 24})
+            </span>
           </div>
         </div>
 
@@ -53,34 +57,65 @@ export default function ServiceCard({ service }: ServiceCardProps) {
         <div>
           <h3
             className="text-xl font-bold mb-2 transition-colors line-clamp-1"
-            style={{ color: "var(--color-ink)", fontFamily: "var(--font-display)" }}
+            style={{
+              color: "var(--color-ink)",
+              fontFamily: "var(--font-display)",
+            }}
           >
             {service.title}
           </h3>
           <p
             className="text-sm line-clamp-2 leading-relaxed"
-            style={{ color: "var(--color-ink-muted)", fontFamily: "var(--font-body)" }}
+            style={{
+              color: "var(--color-ink-muted)",
+              fontFamily: "var(--font-body)",
+            }}
           >
             {service.description}
           </p>
         </div>
 
         {/* Duration badge */}
-        <div className="flex items-center gap-2 text-xs font-medium" style={{ color: "var(--color-steel)" }}>
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        <div
+          className="flex items-center gap-2 text-xs font-medium"
+          style={{ color: "var(--color-steel)" }}
+        >
+          <svg
+            className="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
           </svg>
           Est. Time: {formatDuration(service.duration)}
         </div>
       </div>
 
       {/* Footer / Price & Action */}
-      <div className="pt-6 mt-6 border-t flex items-center justify-between" style={{ borderColor: "var(--color-steel-200)" }}>
+      <div
+        className="pt-6 mt-6 border-t flex items-center justify-between"
+        style={{ borderColor: "var(--color-steel-200)" }}
+      >
         <div>
-          <span className="text-xs font-medium block" style={{ color: "var(--color-ink-muted)" }}>
+          <span
+            className="text-xs font-medium block"
+            style={{ color: "var(--color-ink-muted)" }}
+          >
             Starting at
           </span>
-          <span className="text-2xl font-black" style={{ color: "var(--color-ink)", fontFamily: "var(--font-display)" }}>
+          <span
+            className="text-2xl font-black"
+            style={{
+              color: "var(--color-ink)",
+              fontFamily: "var(--font-display)",
+            }}
+          >
             ৳{service.price}
           </span>
         </div>
@@ -94,8 +129,18 @@ export default function ServiceCard({ service }: ServiceCardProps) {
           }}
         >
           Book Now
-          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          <svg
+            className="w-3.5 h-3.5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M14 5l7 7m0 0l-7 7m7-7H3"
+            />
           </svg>
         </Link>
       </div>
