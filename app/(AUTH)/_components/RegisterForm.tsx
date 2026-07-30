@@ -114,14 +114,14 @@ function RegisterForm() {
         type="submit"
         className="w-full py-3 mt-4 font-semibold text-white transition-colors duration-200"
         style={{
-          backgroundColor: "var(--color-navy)",
+          backgroundColor: "var(--color-primary)",
           borderRadius: "var(--radius-md)",
         }}
         onMouseOver={(e) =>
-          (e.currentTarget.style.backgroundColor = "var(--color-navy-700)")
+          (e.currentTarget.style.backgroundColor = "var(--color-steel)")
         }
         onMouseOut={(e) =>
-          (e.currentTarget.style.backgroundColor = "var(--color-navy)")
+          (e.currentTarget.style.backgroundColor = "var(--color-primary)")
         }
       >
         {pedding ? (

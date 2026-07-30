@@ -63,7 +63,7 @@ export default function NotFound() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <Link
             href="/"
-            className="w-full sm:w-auto px-6 py-3 font-semibold text-white text-sm transition-all duration-200 text-center"
+            className="w-full sm:w-auto px-6 py-3 font-semibold text-black text-sm transition-all duration-200 text-center"
             style={{
               backgroundColor: "var(--color-navy)",
               borderRadius: "var(--radius-md)",

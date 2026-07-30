@@ -41,7 +41,7 @@ export default function LoginPage() {
           <Link 
             href="/register" 
             className="font-bold hover:underline focus:outline-none"
-            style={{ color: 'var(--color-signal)' }}
+            style={{ color: 'var(--color-navy)' }}
           >
             Register now
           </Link>
