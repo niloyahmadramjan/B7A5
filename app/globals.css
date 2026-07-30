@@ -12,8 +12,8 @@
    ========================================================================== */
 :root {
   /* --- Brand palette --- */
-  --color-navy: #0f2540; /* primary — headers, navbar, footer bg */
-  --color-navy-700: #17324f; /* hover/raised surfaces on navy */
+  --color-navy:  #ffffff; /* primary — headers, navbar, footer bg */
+  --color-navy-700:  #ffffff; /* hover/raised surfaces on navy */
   --color-steel: #4a6580; /* secondary text, borders, muted icons */
   --color-steel-200: #c6d2da; /* light borders/dividers on mist bg */
   --color-signal: #f2542d; /* accent — CTAs, "Now", active states */

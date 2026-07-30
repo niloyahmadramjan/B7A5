@@ -53,7 +53,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
         <div>
           <h3
             className="text-xl font-bold mb-2 transition-colors line-clamp-1"
-            style={{ color: "var(--color-navy)", fontFamily: "var(--font-display)" }}
+            style={{ color: "var(--color-ink)", fontFamily: "var(--font-display)" }}
           >
             {service.title}
           </h3>
@@ -80,7 +80,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
           <span className="text-xs font-medium block" style={{ color: "var(--color-ink-muted)" }}>
             Starting at
           </span>
-          <span className="text-2xl font-black" style={{ color: "var(--color-navy)", fontFamily: "var(--font-display)" }}>
+          <span className="text-2xl font-black" style={{ color: "var(--color-ink)", fontFamily: "var(--font-display)" }}>
             ৳{service.price}
           </span>
         </div>
