@@ -14,7 +14,7 @@ interface NavbarProps {
 export default function Navbar({ userData }: NavbarProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
-  console.log(userData);
+  // console.log(userData);
   // Normalize user data whether passed as raw API response or direct profile object
   // const user: UserProfile | null = userData
   //   ? "data" in userData

@@ -91,7 +91,7 @@
     --color-mist: #0b1620;
     --color-surface: #12222f;
     --color-ink: #eaeef1;
-    --color-ink-muted: #97a6b2;
+    --color-ink-muted: #2c4152;
     --color-steel-200: #24384a;
   }
 }
@@ -104,7 +104,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  background: var(--color-ink-muted);
+  background: var(--color-mist);
   color: var(--color-ink);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
