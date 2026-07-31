@@ -8,7 +8,7 @@ export default function LoginPage() {
   const handleLoginAction = (formData: FormData) => {
     const email = formData.get("email");
     const password = formData.get("password");
-    console.log("Login action triggered:", { email, password });
+    // console.log("Login action triggered:", { email, password });
   };
 
   return (

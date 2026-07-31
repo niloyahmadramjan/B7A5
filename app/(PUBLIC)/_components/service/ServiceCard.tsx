@@ -17,7 +17,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
     return `${mins} mins`;
   };
 
-  console.log(service.technicianId, "from service card");
+  // console.log(service.technicianId, "from service card");
 
   return (
     <div

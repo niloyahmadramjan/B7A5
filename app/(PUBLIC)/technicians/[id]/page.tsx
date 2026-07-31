@@ -11,12 +11,12 @@ export default async function TechnicianPage({
   const { id } = await params;
 
   const { serviceId } = await searchParams;
-  console.log(id,"form dynamic page tecnician id")
-  console.log(serviceId,"form dynamic page service id")
+//   console.log(id,"form dynamic page tecnician id")
+//   console.log(serviceId,"form dynamic page service id")
 
 
   const result = await getTechnician(id);
-  console.log(result, "result from techincial")
+//   console.log(result, "result from techincial")
 
   if (!result.success) {
     return <div>Technician Not Found</div>;

@@ -12,7 +12,7 @@ export default async function ServiceGrid({
 //   console.log(query);
   const result = await getPublicServices({query});
   const service = result.data.data
-  console.log(service, "from service list")
+  // console.log(service, "from service list")
 
   return (
     <>
