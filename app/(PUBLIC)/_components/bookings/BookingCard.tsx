@@ -2,20 +2,21 @@
 import { generateTimeSlots } from "@/utils/generateTimeSlots";
 import { useState, useTransition } from "react";
 import { customerBooking } from "../../_action/customerBooking";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
-export default function BookingCard({
-  technician,
-  service,
-}: any) {
-  const [selectedDate] = useState(new Date()); // later date picker use করতে পারো
+export default function BookingCard({ technician, service }: any) {
+  const [selectedDate] = useState(new Date()); 
   const [time, setTime] = useState("");
   const [address, setAddress] = useState("");
   const [notes, setNotes] = useState("");
 
   const [pending, startTransition] = useTransition();
 
+  const router = useRouter()
+
   const availability = technician.availability?.find(
-    (item: any) => item.isAvailable
+    (item: any) => item.isAvailable,
   );
 
   const timeSlots = availability
@@ -28,11 +29,13 @@ export default function BookingCard({
 
   const handleBooking = () => {
     if (!time) {
-      return alert("Please select a time");
+      // return alert("Please select a time");
+      return toast.warning("Please select a time")
     }
 
     if (!address.trim()) {
-      return alert("Address is required");
+      // return alert("Address is required");
+      return toast.warning("Address is required")
     }
 
     const [hour, minute] = time.split(":").map(Number);
@@ -53,9 +56,12 @@ export default function BookingCard({
       });
 
       if (result.success) {
-        alert("Booking created");
+        // alert("Booking created");
+        toast.success("Booking created successfully!")
+        router.push("/dashbaord/bookings")
       } else {
-        alert(result.message);
+        // alert(result.message);
+        toast.error(result.message)
       }
     });
   };
@@ -73,19 +79,13 @@ export default function BookingCard({
       <div className="mt-5">
         <h3 className="font-bold">{service.title}</h3>
 
-        <p className="text-gray-500">
-          {service.description}
-        </p>
+        <p className="text-gray-500">{service.description}</p>
 
-        <div className="mt-3 font-bold text-xl">
-          ৳{service.price}
-        </div>
+        <div className="mt-3 font-bold text-xl">৳{service.price}</div>
       </div>
 
       <div className="mt-5">
-        <label className="text-sm font-semibold">
-          Available Time
-        </label>
+        <label className="text-sm font-semibold">Available Time</label>
 
         <select
           value={time}
@@ -94,18 +94,16 @@ export default function BookingCard({
         >
           <option value="">Select Time</option>
 
-          {timeSlots.map((slot: string) => (
-            <option key={slot} value={slot}>
-              {slot}
+          {timeSlots.map((slot) => (
+            <option key={slot.value} value={slot.value}>
+              {slot.label}
             </option>
           ))}
         </select>
       </div>
 
       <div className="mt-4">
-        <label className="text-sm font-semibold">
-          Address
-        </label>
+        <label className="text-sm font-semibold">Address</label>
 
         <input
           type="text"
@@ -117,9 +115,7 @@ export default function BookingCard({
       </div>
 
       <div className="mt-4">
-        <label className="text-sm font-semibold">
-          Notes
-        </label>
+        <label className="text-sm font-semibold">Notes</label>
 
         <textarea
           rows={4}
@@ -133,7 +129,7 @@ export default function BookingCard({
       <button
         disabled={pending}
         onClick={handleBooking}
-        className="w-full mt-5 py-3 rounded-xl text-white font-bold"
+        className="w-full mt-5 py-3 rounded-xl text-white font-bold cursor-pointer"
         style={{
           backgroundColor: "var(--color-signal)",
         }}

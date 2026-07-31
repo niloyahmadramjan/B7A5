@@ -1,9 +1,22 @@
 import Link from "next/link";
-import React, { useActionState } from "react";
+import React, { useActionState, useEffect } from "react";
 import { loginAction } from "../_action/auth";
+import { toast } from "sonner";
 
 function LoginForm() {
   const [state, action, pedding] = useActionState(loginAction, false);
+
+  useEffect(() => {
+    if (!state) return;
+
+    if (!state.success && state.message) {
+      toast.error(state.message);
+    }
+
+    if (state.success) {
+      toast.success("Login successful");
+    }
+  }, [state]);
 
   return (
     <form

@@ -1,8 +1,21 @@
-import React, { useActionState } from "react";
+import React, { useActionState, useEffect } from "react";
 import { registerAction } from "../_action/auth";
+import { toast } from "sonner";
 
 function RegisterForm() {
   const [state, action, pedding] = useActionState(registerAction, false);
+
+   useEffect(() => {
+      if (!state) return;
+  
+      if (!state.success && state.message) {
+        toast.error(state.message);
+      }
+  
+      if (state.success) {
+        toast.success("Login successful");
+      }
+    }, [state]);
   
   return (
     <form

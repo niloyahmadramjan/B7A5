@@ -26,12 +26,12 @@ export default function Navbar({ userData }: NavbarProps) {
   const getDashboardLink = (role?: string) => {
     switch (role) {
       case "TECHNICIAN":
-        return "/dashboard/technician";
+        return "/technician-dashbaord";
       case "ADMIN":
-        return "/dashboard/admin";
+        return "/admin-dashboard";
       case "CUSTOMER":
       default:
-        return "/dashboard/customer";
+        return "/dashboard";
     }
   };
 
@@ -157,7 +157,7 @@ export default function Navbar({ userData }: NavbarProps) {
                       <p className="text-xs font-medium text-gray-500">
                         Signed in as
                       </p>
-                      <p className="text-sm font-bold text-gray-900 truncate">
+                      <p className="text-sm  font-bold text-white truncate">
                         {userData.success && userData.data.email}
                       </p>
                     </div>

@@ -4,7 +4,6 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-
 export const loginAction = async (
   prevState: LoginState,
   formData: FormData,
@@ -22,34 +21,36 @@ export const loginAction = async (
 
   const result = await res.json();
 
+  if (!result.success) {
+    return {
+      success: false,
+      message: "Invalid email or password",
+    };
+  }
+  const cookieStore = await cookies();
+  cookieStore.set("accessToken", result.data.accessToken, {
+    httpOnly: true,
+    maxAge: 60 * 60 * 24,
+    sameSite: "lax",
+  });
+  cookieStore.set("refreshToken", result.data.refreshToken, {
+    httpOnly: true,
+    maxAge: 60 * 60 * 24 * 7,
+    sameSite: "lax",
+  });
 
-    if (result.success) {
-      const cookieStore = await cookies();
-      cookieStore.set("accessToken", result.data.accessToken, {
-        httpOnly: true,
-        maxAge: 60 * 60 * 24,
-        sameSite: "lax",
-      });
-      cookieStore.set("refreshToken", result.data.refreshToken, {
-        httpOnly: true,
-        maxAge: 60 * 60 * 24 * 7,
-        sameSite: "lax",
-      });
-    }
+  const decodedToken = jwt.decode(result.data.accessToken) as JwtPayload;
 
-    const decodedToken = jwt.decode(result.data.accessToken) as JwtPayload;
-
-// console.log(decodedToken)
-    if (decodedToken.role === "CUSTOMER") {
-      redirect("/dashboard");
-    } else if (decodedToken.role === "ADMIN") {
-      redirect("/admin-dashboard");
-    } else if (decodedToken.role === "TECHNICIAN") {
-      redirect("/technician-dashboard");
-    }
+  // console.log(decodedToken)
+  if (decodedToken.role === "CUSTOMER") {
+    redirect("/dashboard");
+  } else if (decodedToken.role === "ADMIN") {
+    redirect("/admin-dashboard");
+  } else if (decodedToken.role === "TECHNICIAN") {
+    redirect("/technician-dashboard");
+  }
   return result;
 };
-
 
 export const registerAction = async (
   prevState: RegisterState,
