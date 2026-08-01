@@ -2,9 +2,11 @@ import Link from "next/link";
 import React, { useActionState, useEffect } from "react";
 import { loginAction } from "../_action/auth";
 import { toast } from "sonner";
+import { useRouter } from "next/dist/client/components/navigation";
 
 function LoginForm() {
   const [state, action, pedding] = useActionState(loginAction, false);
+  const router  = useRouter();
 
   useEffect(() => {
     if (!state) return;
@@ -15,6 +17,17 @@ function LoginForm() {
 
     if (state.success) {
       toast.success("Login successful");
+
+      if(state.role === "ADMIN"){
+        router.push("/admin-dashboard");
+      }else if(state.role === "TECHNICIAN"){
+        router.push("/technician-dashboard");
+      }else if(state.role === "CUSTOMER"){
+        router.push("/dashboard");
+      }else{
+        router.push("/");
+      }
+
     }
   }, [state]);
 

@@ -2,7 +2,6 @@
 import { LoginState, RegisterState } from "@/types/authtype";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 
 export const loginAction = async (
   prevState: LoginState,
@@ -16,10 +15,12 @@ export const loginAction = async (
     headers: {
       "content-type": "application/json",
     },
+    cache: "no-cache",
     body: JSON.stringify({ email, password }),
   });
 
   const result = await res.json();
+  console.log(result);
 
   if (!result.success) {
     return {
@@ -40,16 +41,15 @@ export const loginAction = async (
   });
 
   const decodedToken = jwt.decode(result.data.accessToken) as JwtPayload;
-
-  // console.log(decodedToken)
-  if (decodedToken.role === "CUSTOMER") {
-    redirect("/dashboard");
-  } else if (decodedToken.role === "ADMIN") {
-    redirect("/admin-dashboard");
-  } else if (decodedToken.role === "TECHNICIAN") {
-    redirect("/technician-dashboard");
+  if(decodedToken.role){
+    return{
+      success: true,
+      message: "Login successful",
+      role: decodedToken.role,
+    }
   }
-  return result;
+
+  return result
 };
 
 export const registerAction = async (
@@ -66,6 +66,7 @@ export const registerAction = async (
     headers: {
       "content-type": "application/json",
     },
+    cache: "no-cache",
     body: JSON.stringify({ name, email, phone, password }),
   });
 
