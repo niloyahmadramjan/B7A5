@@ -1,8 +1,8 @@
 export default function Loading() {
   return (
-    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-slate-950/80 backdrop-blur-md">
+    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center  backdrop-blur-md">
       {/* Main Loading Container */}
-      <div className="flex flex-col items-center space-y-6 p-8 rounded-2xl bg-slate-900 border border-slate-800 shadow-2xl shadow-blue-500/10">
+      <div className="flex flex-col items-center space-y-6 p-8 rounded-2xl  border border-slate-800 shadow-2xl shadow-blue-500/10">
         
         {/* Animated Rings & Spinner */}
         <div className="relative flex items-center justify-center">

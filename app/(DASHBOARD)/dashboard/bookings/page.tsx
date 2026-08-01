@@ -80,14 +80,11 @@ export default async function BookingsListPage() {
       <div
         className="
           rounded-2xl
-          border
+          
           overflow-hidden
-          shadow-sm
+          shadow-sm bg-slate-900 
         "
-        style={{
-          backgroundColor: "var(--color-surface)",
-          borderColor: "var(--color-steel-200)",
-        }}
+       
       >
         <div className="overflow-x-auto">
           <table className="w-full">
@@ -96,7 +93,7 @@ export default async function BookingsListPage() {
                 className="
                   text-sm
                   border-b bg-steel-500
-                  text-steel-900
+                  text-steel-400
                 "
                
               >

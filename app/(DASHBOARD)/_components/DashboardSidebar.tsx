@@ -40,6 +40,7 @@ export default function DashboardSidebar({ role = "CUSTOMER" }: SidebarProps) {
       { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
       { name: "My Bookings", href: "/dashboard/bookings", icon: Calendar },
       { name: "Account Details", href: "/dashboard/profile", icon: Users },
+      { name: "Payment History", href: "/dashboard/payments", icon: CreditCard },
     ],
   };
 
