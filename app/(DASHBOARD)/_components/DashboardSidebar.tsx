@@ -86,7 +86,7 @@ export default function DashboardSidebar({ role = "CUSTOMER" }: SidebarProps) {
       </nav>
 
       {/* Logout / Bottom Section */}
-      <div className="p-4 border-t border-gray-200">
+      {/* <div className="p-4 border-t border-gray-200">
         <button
           onClick={() => userLogout()}
           className="flex items-center gap-3 px-3 py-2.5 w-full rounded-lg text-sm font-medium text-red-600 hover:bg-red-50 transition-colors"
@@ -94,7 +94,7 @@ export default function DashboardSidebar({ role = "CUSTOMER" }: SidebarProps) {
           <LogOut className="w-5 h-5 text-red-500" />
           Logout
         </button>
-      </div>
+      </div> */}
     </aside>
   );
 }

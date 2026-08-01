@@ -1,101 +1,32 @@
-export default function GlobalLoading() {
+export default function Loading() {
   return (
-    <div
-      className="min-h-[85vh] w-full p-4 sm:p-8"
-      style={{ backgroundColor: "var(--color-mist)" }}
-    >
-      <div className="max-w-7xl mx-auto space-y-8 animate-pulse">
+    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-slate-950/80 backdrop-blur-md">
+      {/* Main Loading Container */}
+      <div className="flex flex-col items-center space-y-6 p-8 rounded-2xl bg-slate-900 border border-slate-800 shadow-2xl shadow-blue-500/10">
         
-        {/* Header / Hero Skeleton */}
-        <div
-          className="p-8 rounded-2xl space-y-4"
-          style={{
-            backgroundColor: "var(--color-surface)",
-            borderRadius: "var(--radius-lg)",
-            boxShadow: "var(--shadow-card)",
-          }}
-        >
-          <div
-            className="h-8 w-2/5 sm:w-1/4 rounded-md"
-            style={{ backgroundColor: "var(--color-steel-200)" }}
-          ></div>
-          <div
-            className="h-4 w-4/5 sm:w-2/4 rounded-md"
-            style={{ backgroundColor: "var(--color-steel-200)" }}
-          ></div>
+        {/* Animated Rings & Spinner */}
+        <div className="relative flex items-center justify-center">
+          {/* Outer Glowing Ring */}
+          <div className="absolute w-16 h-16 rounded-full border-4 border-blue-500/20 animate-ping"></div>
+          
+          {/* Spinning Gradient Border */}
+          <div className="w-14 h-14 rounded-full border-4 border-transparent border-t-blue-500 border-r-indigo-500 animate-spin"></div>
+          
+          {/* Inner Pulsing Dot */}
+          <div className="absolute w-3 h-3 bg-blue-500 rounded-full animate-pulse shadow-lg shadow-blue-500/50"></div>
         </div>
 
-        {/* Filter Bar Placeholder */}
-        <div
-          className="h-14 w-full rounded-xl flex items-center justify-between px-6"
-          style={{
-            backgroundColor: "var(--color-surface)",
-            borderRadius: "var(--radius-md)",
-          }}
-        >
-          <div
-            className="h-6 w-32 rounded-md"
-            style={{ backgroundColor: "var(--color-steel-200)" }}
-          ></div>
-          <div className="flex gap-3">
-            <div
-              className="h-8 w-20 rounded-md"
-              style={{ backgroundColor: "var(--color-steel-200)" }}
-            ></div>
-            <div
-              className="h-8 w-20 rounded-md"
-              style={{ backgroundColor: "var(--color-steel-200)" }}
-            ></div>
-          </div>
+        {/* Loading Text & Description */}
+        <div className="text-center space-y-1.5">
+          <h3 className="text-white font-semibold text-base tracking-wide flex items-center justify-center gap-1.5">
+            Loading<span className="animate-bounce">.</span><span className="animate-bounce delay-150">.</span><span className="animate-bounce delay-300">.</span>
+          </h3>
+          <p className="text-xs text-gray-400">Please wait while we fetch your data</p>
         </div>
 
-        {/* Content Cards Grid Skeleton */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[1, 2, 3, 4, 5, 6].map((i) => (
-            <div
-              key={i}
-              className="p-6 rounded-2xl space-y-4 border"
-              style={{
-                backgroundColor: "var(--color-surface)",
-                borderColor: "var(--color-steel-200)",
-                borderRadius: "var(--radius-lg)",
-                boxShadow: "var(--shadow-card)",
-              }}
-            >
-              {/* Image / Thumbnail Skeleton */}
-              <div
-                className="w-full h-44 rounded-xl"
-                style={{
-                  backgroundColor: "var(--color-steel-200)",
-                  borderRadius: "var(--radius-md)",
-                }}
-              ></div>
-
-              {/* Title & Subtitle */}
-              <div className="space-y-2">
-                <div
-                  className="h-5 w-3/4 rounded"
-                  style={{ backgroundColor: "var(--color-steel-200)" }}
-                ></div>
-                <div
-                  className="h-4 w-1/2 rounded"
-                  style={{ backgroundColor: "var(--color-steel-200)" }}
-                ></div>
-              </div>
-
-              {/* Metadata Footer Skeleton */}
-              <div className="pt-4 flex items-center justify-between border-t border-gray-100">
-                <div
-                  className="h-6 w-20 rounded-full"
-                  style={{ backgroundColor: "var(--color-steel-200)" }}
-                ></div>
-                <div
-                  className="h-8 w-24 rounded-lg"
-                  style={{ backgroundColor: "var(--color-steel-200)" }}
-                ></div>
-              </div>
-            </div>
-          ))}
+        {/* Bottom Progress Bar Simulation */}
+        <div className="w-36 h-1 bg-slate-800 rounded-full overflow-hidden">
+          <div className="w-full h-full bg-linear-to-r from-blue-500 via-indigo-500 to-blue-600 animate-[shimmer_1.5s_infinite]"></div>
         </div>
       </div>
     </div>
