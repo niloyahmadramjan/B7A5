@@ -58,7 +58,7 @@ export default function BookingCard({ technician, service }: any) {
       if (result.success) {
         // alert("Booking created");
         toast.success("Booking created successfully!")
-        router.push("/dashbaord/bookings")
+        router.push("/dashboard/bookings")
       } else {
         // alert(result.message);
         toast.error(result.message)

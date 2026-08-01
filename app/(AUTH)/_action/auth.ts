@@ -20,7 +20,7 @@ export const loginAction = async (
   });
 
   const result = await res.json();
-  console.log(result);
+  // console.log(result);
 
   if (!result.success) {
     return {
