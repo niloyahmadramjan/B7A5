@@ -80,7 +80,7 @@ export default function Navbar({ userData }: NavbarProps) {
               href="/technicians"
               className="text-sm font-medium text-gray-400 hover:text-white transition-colors"
             >
-              Top Technicians
+              Technicians
             </Link>
             <Link
               href="/#how-it-works"

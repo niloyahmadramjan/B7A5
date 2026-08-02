@@ -5,7 +5,7 @@ import {
   CreditCard,
   XCircle,
   Star,
-  CheckCircle,
+  Wrench,
 } from "lucide-react";
 
 import {
@@ -17,34 +17,18 @@ import {
 import { BookingStatus } from "@/types/booking";
 
 const getStatusBadge = (status: BookingStatus) => {
-  const styles = {
-    REQUESTED: "bg-yellow-100 text-yellow-700 border-yellow-200",
-
-    ACCEPTED: "bg-blue-100 text-blue-700 border-blue-200",
-
-    DECLINED: "bg-red-100 text-red-700 border-red-200",
-
-    PAID: "bg-purple-100 text-purple-700 border-purple-200",
-
-    IN_PROGRESS: "bg-green-100 text-green-700 border-green-200",
-
-    COMPLETED: "bg-emerald-100 text-emerald-700 border-emerald-200",
-
-    CANCELLED: "bg-gray-100 text-gray-700 border-gray-200",
+  const statusMap: Record<BookingStatus, string> = {
+    REQUESTED: "badge-requested",
+    ACCEPTED: "badge-accepted",
+    DECLINED: "badge-declined",
+    PAID: "badge-paid",
+    IN_PROGRESS: "badge-in-progress",
+    COMPLETED: "badge-completed",
+    CANCELLED: "badge-cancelled",
   };
 
   return (
-    <span
-      className={`
-        inline-flex items-center
-        px-3 py-1
-        rounded-full
-        text-xs
-        font-semibold
-        border
-        ${styles[status]}
-      `}
-    >
+    <span className={`badge ${statusMap[status] || "badge-completed"}`}>
       {status.replace("_", " ")}
     </span>
   );
@@ -57,108 +41,49 @@ export default async function BookingsListPage() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1
-          className="text-2xl font-bold"
-          style={{
-            color: "var(--color-text)",
-          }}
-        >
+        <h1 className="text-2xl font-bold">
           Booking History
         </h1>
-
-        <p
-          className="text-sm mt-1"
-          style={{
-            color: "var(--color-muted)",
-          }}
-        >
+        <p className="text-sm mt-1 text-[var(--color-ink-muted)]">
           View and manage your service bookings.
         </p>
       </div>
 
       {/* Table Card */}
-      <div
-        className="
-          rounded-2xl
-          
-          overflow-hidden
-          shadow-sm bg-slate-900 
-        "
-       
-      >
+      <div className="card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr
-                className="
-                  text-sm
-                  border-b bg-steel-500
-                  text-steel-400
-                "
-               
-              >
+              <tr className="text-sm border-b border-[var(--color-steel-200)] bg-[var(--color-mist)] text-[var(--color-ink-muted)]">
                 <th className="px-6 py-4 text-left font-semibold">Service</th>
-
                 <th className="px-6 py-4 text-left font-semibold">Schedule</th>
-
                 <th className="px-6 py-4 text-left font-semibold">Address</th>
-
                 <th className="px-6 py-4 text-left font-semibold">Status</th>
-
                 <th className="px-6 py-4 text-right font-semibold">Actions</th>
               </tr>
             </thead>
 
             <tbody>
               {bookings.length > 0 ? (
-                bookings.map((booking) => (
+                bookings.map((booking: any) => (
                   <tr
                     key={booking.id}
-                    className="
-                      transition
-                      border-b
-                      hover:bg-black/5
-                    "
-                    style={{
-                      borderColor: "var(--color-steel-200)",
-                    }}
+                    className="transition border-b border-[var(--color-steel-200)] hover:bg-[var(--color-mist)]/50"
                   >
                     {/* Service */}
                     <td className="px-6 py-5">
-                      <p
-                        className="font-semibold"
-                        style={{
-                          color: "var(--color-text)",
-                        }}
-                      >
+                      <p className="font-semibold text-[var(--color-ink)]">
                         {booking.service?.title}
                       </p>
-
-                      <p
-                        className="text-xs mt-1"
-                        style={{
-                          color: "var(--color-muted)",
-                        }}
-                      >
+                      <p className="text-xs mt-1 text-[var(--color-ink-muted)]">
                         {booking.service?.category?.name}
                       </p>
                     </td>
 
                     {/* Date */}
                     <td className="px-6 py-5">
-                      <div
-                        className="
-                          flex
-                          items-center
-                          gap-2
-                          text-sm
-                        "
-                        style={{
-                          color: "var(--color-muted)",
-                        }}
-                      >
-                        <Calendar className="w-4 h-4" />
-
+                      <div className="flex items-center gap-2 text-sm text-[var(--color-ink-muted)]">
+                        <Calendar className="w-4 h-4 text-[var(--color-steel)]" />
                         {new Date(booking.scheduledAt).toLocaleString([], {
                           dateStyle: "medium",
                           timeStyle: "short",
@@ -167,17 +92,7 @@ export default async function BookingsListPage() {
                     </td>
 
                     {/* Address */}
-                    <td
-                      className="
-                        px-6 py-5
-                        text-sm
-                        max-w-[180px]
-                        truncate
-                      "
-                      style={{
-                        color: "var(--color-muted)",
-                      }}
-                    >
+                    <td className="px-6 py-5 text-sm max-w-[180px] truncate text-[var(--color-ink-muted)]">
                       {booking.address}
                     </td>
 
@@ -187,34 +102,12 @@ export default async function BookingsListPage() {
                     </td>
 
                     {/* Actions */}
-                    <td
-                      className="
-                        px-6 py-5
-                        flex
-                        justify-end
-                        gap-2
-                      "
-                    >
+                    <td className="px-6 py-5 flex justify-end gap-2 items-center">
                       {/* Cancel only REQUESTED */}
                       {booking.status === "REQUESTED" && (
-                        <form
-                          action={cancelBookingAction.bind(null, booking.id)}
-                        >
+                        <form action={cancelBookingAction.bind(null, booking.id)}>
                           <button
-                            className="
-                                inline-flex
-                                items-center
-                                gap-1.5
-                                px-3
-                                py-1.5
-                                rounded-lg
-                                text-xs
-                                font-semibold
-                              "
-                            style={{
-                              backgroundColor: "var(--color-danger-bg)",
-                              color: "var(--color-danger)",
-                            }}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20 hover:bg-red-500/20 transition cursor-pointer"
                           >
                             <XCircle className="w-4 h-4" />
                             Cancel
@@ -226,20 +119,7 @@ export default async function BookingsListPage() {
                       {booking.status === "ACCEPTED" && (
                         <form action={payBookingAction.bind(null, booking.id)}>
                           <button
-                            className="
-                                inline-flex
-                                items-center
-                                gap-1.5
-                                px-3
-                                py-1.5
-                                rounded-lg
-                                text-xs
-                                font-semibold
-                                text-white
-                              "
-                            style={{
-                              backgroundColor: "var(--color-signal)",
-                            }}
+                            className="btn-primary inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold shadow-sm"
                           >
                             <CreditCard className="w-4 h-4" />
                             Pay Now
@@ -247,70 +127,21 @@ export default async function BookingsListPage() {
                         </form>
                       )}
 
-                      {/* Review only if not reviewed */}
-                      {
-                        booking.status === "COMPLETED" &&   <Link
+                      {/* Review */}
+                      {booking.status === "COMPLETED" && (
+                        <Link
                           href={`/dashboard/bookings/${booking.id}#review`}
-                          className="
-                              inline-flex
-                              items-center
-                              gap-1.5
-                              px-3
-                              py-1.5
-                              rounded-lg
-                              text-xs
-                              font-semibold
-                            "
-                          style={{
-                            backgroundColor: "var(--color-warning-bg)",
-                            color: "var(--color-warning)",
-                          }}
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 hover:bg-amber-500/20 transition"
                         >
                           <Star className="w-4 h-4" />
                           Review
                         </Link>
-                      }
-
-                      {/* Already reviewed */}
-                      {/* {booking.status === "COMPLETED" && booking.review && (
-                        <span
-                          className="
-                              inline-flex
-                              items-center
-                              gap-1
-                              px-3
-                              py-1.5
-                              rounded-lg
-                              text-xs
-                              font-semibold
-                            "
-                          style={{
-                            backgroundColor: "var(--color-success-bg)",
-                            color: "var(--color-success)",
-                          }}
-                        >
-                          <CheckCircle className="w-4 h-4" />
-                          Reviewed
-                        </span>
-                      )} */}
+                      )}
 
                       {/* View */}
                       <Link
                         href={`/dashboard/bookings/${booking.id}`}
-                        className="
-                          inline-flex
-                          items-center
-                          gap-1.5
-                          px-3
-                          py-1.5
-                          rounded-lg
-                          text-xs
-                          font-semibold
-                        "
-                        style={{
-                          backgroundColor: "var(--color-steel-100)",
-                          color: "var(--color-text)",
-                        }}
+                        className="btn-secondary inline-flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg transition"
                       >
                         <Eye className="w-4 h-4" />
                         View
@@ -322,16 +153,9 @@ export default async function BookingsListPage() {
                 <tr>
                   <td
                     colSpan={5}
-                    className="
-                        px-6
-                        py-12
-                        text-center
-                        text-sm
-                      "
-                    style={{
-                      color: "var(--color-muted)",
-                    }}
+                    className="px-6 py-12 text-center text-sm text-[var(--color-ink-muted)]"
                   >
+                    <Wrench className="w-8 h-8 mx-auto text-[var(--color-steel)] mb-2 animate-pulse" />
                     You have no bookings yet.
                   </td>
                 </tr>

@@ -1,27 +1,22 @@
 import Link from "next/link";
 import {
-  DollarSign,
-  Calendar,
   CreditCard,
-  CheckCircle2,
-  Clock,
-  XCircle,
   ArrowUpRight,
+  Wrench,
 } from "lucide-react";
 import { getAllPayments } from "../_action/paymentHistory";
 
 const getPaymentStatusBadge = (status: string) => {
-  const styles: Record<string, string> = {
-    PAID: "bg-green-500/20 text-green-300 border-green-500/30",
-    SUCCESS: "bg-green-500/20 text-green-300 border-green-500/30",
-    PENDING: "bg-amber-500/20 text-amber-300 border-amber-500/30",
-    FAILED: "bg-red-500/20 text-red-300 border-red-500/30",
-    CANCELLED: "bg-red-900/50 text-red-200 border-red-800",
+  const statusMap: Record<string, string> = {
+    PAID: "badge-paid",
+    SUCCESS: "badge-paid",
+    PENDING: "badge-requested",
+    FAILED: "badge-declined",
+    CANCELLED: "badge-cancelled",
   };
+
   return (
-    <span
-      className={`px-2.5 py-1 rounded-full text-xs font-semibold border ${styles[status] || "bg-gray-800 text-gray-200"}`}
-    >
+    <span className={`badge ${statusMap[status] || "badge-completed"}`}>
       {status}
     </span>
   );
@@ -32,30 +27,30 @@ export default async function PaymentHistoryPage() {
   const payments = response?.data.result || response || [];
 
   return (
-    <div className="space-y-8 max-w-full text-white">
+    <div className="space-y-8 max-w-full">
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-900 border border-slate-700 rounded-2xl p-6 shadow-sm">
+      <div className="card p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white flex items-center gap-2">
-            <CreditCard className="w-6 h-6 text-blue-400" /> Payment History
+          <h1 className="text-2xl font-bold flex items-center gap-2">
+            <CreditCard className="w-6 h-6 text-[var(--color-signal)]" /> Payment History
           </h1>
-          <p className="text-sm text-gray-300 mt-1">
+          <p className="text-sm text-[var(--color-ink-muted)] mt-1">
             View and track all transactions, earnings, and payment records.
           </p>
         </div>
-        <div className="bg-slate-800 border border-slate-700 px-4 py-2 rounded-xl text-xs text-gray-300">
+        <div className="bg-[var(--color-mist)] border border-[var(--color-steel-200)] px-4 py-2 rounded-xl text-xs text-[var(--color-ink-muted)]">
           Total Transactions:{" "}
-          <span className="font-bold text-white">{payments.length || 0}</span>
+          <span className="font-bold text-[var(--color-ink)]">{payments.length || 0}</span>
         </div>
       </div>
 
       {/* Payments List / Table */}
-      <div className="bg-slate-900 border border-slate-700 rounded-xl overflow-hidden shadow-sm">
+      <div className="card overflow-hidden">
         {payments.length > 0 ? (
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="border-b border-slate-800 bg-slate-800/50 text-gray-300 text-xs uppercase tracking-wider">
+                <tr className="border-b border-[var(--color-steel-200)] bg-[var(--color-mist)] text-[var(--color-ink-muted)] text-xs uppercase tracking-wider">
                   <th className="p-4 font-semibold">Transaction ID</th>
                   <th className="p-4 font-semibold">Amount</th>
                   <th className="p-4 font-semibold">Status</th>
@@ -63,23 +58,22 @@ export default async function PaymentHistoryPage() {
                   <th className="p-4 font-semibold text-right">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800 text-sm">
+              <tbody className="divide-y divide-[var(--color-steel-200)] text-sm">
                 {payments.map((payment: any) => (
                   <tr
                     key={payment.id || payment._id}
-                    className="hover:bg-slate-800/40 transition"
+                    className="hover:bg-[var(--color-mist)]/50 transition"
                   >
-                    <td className="p-4 font-mono text-xs text-gray-300">
+                    <td className="p-4 font-mono text-xs text-[var(--color-ink-muted)]">
                       #{payment.id ? payment.id.slice(0, 10) : "N/A"}...
                     </td>
-                    <td className="p-4 font-bold text-white flex items-center gap-1">
-                      <DollarSign className="w-4 h-4 text-green-400" />
-                      {payment.amount || 0}
+                    <td className="p-4 font-bold text-[var(--color-ink)]">
+                      ৳{payment.amount?.toLocaleString() || 0}
                     </td>
                     <td className="p-4">
                       {getPaymentStatusBadge(payment.status || "PAID")}
                     </td>
-                    <td className="p-4 text-xs text-gray-300">
+                    <td className="p-4 text-xs text-[var(--color-ink-muted)]">
                       {payment.createdAt
                         ? new Date(payment.createdAt).toLocaleString([], {
                             dateStyle: "medium",
@@ -90,7 +84,7 @@ export default async function PaymentHistoryPage() {
                     <td className="p-4 text-right">
                       <Link
                         href={`/dashboard/payments/${payment.id || ""}`}
-                        className="inline-flex items-center gap-1 px-3 py-1.5 bg-slate-800 border border-slate-700 hover:bg-slate-700 text-white text-xs font-semibold rounded-lg transition"
+                        className="btn-secondary inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold rounded-lg transition"
                       >
                         Details <ArrowUpRight className="w-3.5 h-3.5" />
                       </Link>
@@ -101,12 +95,12 @@ export default async function PaymentHistoryPage() {
             </table>
           </div>
         ) : (
-          <div className="p-12 text-center text-gray-400 space-y-2">
-            <CreditCard className="w-10 h-10 mx-auto text-gray-600 animate-pulse" />
-            <p className="text-base font-medium text-white">
+          <div className="card p-12 text-center text-[var(--color-ink-muted)] space-y-2">
+            <Wrench className="w-10 h-10 mx-auto text-[var(--color-steel)] animate-pulse" />
+            <p className="text-base font-medium text-[var(--color-ink)]">
               No payment history found
             </p>
-            <p className="text-xs text-gray-400">
+            <p className="text-xs text-[var(--color-ink-muted)]">
               Transactions will appear here once payments are processed.
             </p>
           </div>
