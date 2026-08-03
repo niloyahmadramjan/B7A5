@@ -91,7 +91,7 @@ export const getPublicServices = async ({
 
 
   const res = await fetch(
-    `${process.env.BACKEND_API_URL}/api/services?${params.toString()}`,
+    `${process.env.BACKEND_API_URL}/api/services/all-services?${params.toString()}`,
     {
       method: "GET",
       headers: {

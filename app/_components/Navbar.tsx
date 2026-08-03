@@ -27,7 +27,7 @@ export default function Navbar({ userData }: NavbarProps) {
   const getDashboardLink = (role?: string) => {
     switch (role) {
       case "TECHNICIAN":
-        return "/technician-dashbaord";
+        return "/technician-dashboard";
       case "ADMIN":
         return "/admin-dashboard";
       case "CUSTOMER":
