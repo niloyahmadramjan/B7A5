@@ -5,9 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { 
   Users, 
-  Settings, 
   Calendar, 
-  Wrench, 
   CreditCard,
   X,
   LayoutDashboard, 
@@ -33,7 +31,7 @@ export default function DashboardSidebar({ role = "CUSTOMER", isOpen = false, on
     ADMIN: [
       { name: "Dashboard", href: "/admin-dashboard", icon: LayoutDashboard },
       { name: "All Users", href: "/admin-dashboard/users", icon: Users },
-      { name: "Manage Services", href: "/admin-dashboard/services", icon: Wrench },
+      { name: "Bookings", href: "/admin-dashboard/bookings", icon: Calendar },
       { name: "Categories", href: "/admin-dashboard/categories", icon: Layers },
     ],
    TECHNICIAN: [
