@@ -62,6 +62,8 @@ export const registerAction = async (
   const password = formData.get("password") as string;
   const role = formData.get("role") as string;
 
+  // console.log(process.env.BACKEND_API_URL,"from register action")
+
 
   const res = await fetch(`${process.env.BACKEND_API_URL}/api/auth/register`, {
     method: "POST",
@@ -71,8 +73,17 @@ export const registerAction = async (
     cache: "no-cache",
     body: JSON.stringify({ name, email, phone, password, role }),
   });
+  if(!res.ok){
+    const errorResult = await res.json();
+    return {
+      success: false,
+      statusCode: res.status,
+      message: errorResult.message || "Registration failed",
+      data: null,
+    };
+  }
 
   const result = await res.json();
-  // console.log(result)
+  
   return result;
 };

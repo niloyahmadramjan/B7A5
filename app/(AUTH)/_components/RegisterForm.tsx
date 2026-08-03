@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
 import React, { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { User, Wrench, Loader2 } from "lucide-react";
-
-type RegisterState = {
-  success?: boolean;
-  message?: string;
-} | null;
+import { registerAction } from "../_action/auth";
+import { useRouter } from "next/dist/client/components/navigation";
 
 export default function RegisterForm() {
-  const [selectedRole, setSelectedRole] = useState<'CUSTOMER' | 'TECHNICIAN'>('CUSTOMER');
+  const [selectedRole, setSelectedRole] = useState<"CUSTOMER" | "TECHNICIAN">(
+    "CUSTOMER",
+  );
   const [state, action, pending] = useActionState(registerAction, null);
+  const router = useRouter();
 
   useEffect(() => {
     if (!state) return;
@@ -22,6 +22,8 @@ export default function RegisterForm() {
 
     if (state.success) {
       toast.success("Account registered successfully!");
+      // Redirect based on role
+      router.push("/login");
     }
   }, [state]);
 
@@ -36,7 +38,7 @@ export default function RegisterForm() {
 
       {/* Role Selector Cards */}
       <div>
-        <label 
+        <label
           className="block text-sm font-medium mb-1.5"
           style={{ color: "var(--color-ink)" }}
         >
@@ -45,38 +47,64 @@ export default function RegisterForm() {
         <div className="grid grid-cols-2 gap-3">
           {/* Customer Choice */}
           <div
-            onClick={() => setSelectedRole('CUSTOMER')}
+            onClick={() => setSelectedRole("CUSTOMER")}
             className={`cursor-pointer border p-3 rounded-lg flex flex-col items-center justify-center transition-all ${
-              selectedRole === 'CUSTOMER' 
-                ? 'border-primary bg-primary/5 shadow-sm' 
-                : 'border-border bg-card hover:border-steel-200'
+              selectedRole === "CUSTOMER"
+                ? "border-primary bg-primary/5 shadow-sm"
+                : "border-border bg-card hover:border-steel-200"
             }`}
             style={{
-              borderColor: selectedRole === 'CUSTOMER' ? 'var(--color-signal)' : 'var(--color-steel-250, var(--color-steel-200))',
+              borderColor:
+                selectedRole === "CUSTOMER"
+                  ? "var(--color-signal)"
+                  : "var(--color-steel-250, var(--color-steel-200))",
               borderRadius: "var(--radius-sm)",
             }}
           >
-            <User className={`w-5 h-5 mb-1 ${selectedRole === 'CUSTOMER' ? 'text-primary' : 'text-muted-foreground'}`} />
-            <span className="text-xs font-bold" style={{ color: selectedRole === 'CUSTOMER' ? 'var(--color-navy)' : 'var(--color-ink-muted)' }}>
+            <User
+              className={`w-5 h-5 mb-1 ${selectedRole === "CUSTOMER" ? "text-primary" : "text-muted-foreground"}`}
+            />
+            <span
+              className="text-xs font-bold"
+              style={{
+                color:
+                  selectedRole === "CUSTOMER"
+                    ? "var(--color-navy)"
+                    : "var(--color-ink-muted)",
+              }}
+            >
               Customer
             </span>
           </div>
 
           {/* Technician Choice */}
           <div
-            onClick={() => setSelectedRole('TECHNICIAN')}
+            onClick={() => setSelectedRole("TECHNICIAN")}
             className={`cursor-pointer border p-3 rounded-lg flex flex-col items-center justify-center transition-all ${
-              selectedRole === 'TECHNICIAN' 
-                ? 'border-primary bg-primary/5 shadow-sm' 
-                : 'border-border bg-card hover:border-steel-200'
+              selectedRole === "TECHNICIAN"
+                ? "border-primary bg-primary/5 shadow-sm"
+                : "border-border bg-card hover:border-steel-200"
             }`}
             style={{
-              borderColor: selectedRole === 'TECHNICIAN' ? 'var(--color-signal)' : 'var(--color-steel-250, var(--color-steel-200))',
+              borderColor:
+                selectedRole === "TECHNICIAN"
+                  ? "var(--color-signal)"
+                  : "var(--color-steel-250, var(--color-steel-200))",
               borderRadius: "var(--radius-sm)",
             }}
           >
-            <Wrench className={`w-5 h-5 mb-1 ${selectedRole === 'TECHNICIAN' ? 'text-primary' : 'text-muted-foreground'}`} />
-            <span className="text-xs font-bold" style={{ color: selectedRole === 'TECHNICIAN' ? 'var(--color-navy)' : 'var(--color-ink-muted)' }}>
+            <Wrench
+              className={`w-5 h-5 mb-1 ${selectedRole === "TECHNICIAN" ? "text-primary" : "text-muted-foreground"}`}
+            />
+            <span
+              className="text-xs font-bold"
+              style={{
+                color:
+                  selectedRole === "TECHNICIAN"
+                    ? "var(--color-navy)"
+                    : "var(--color-ink-muted)",
+              }}
+            >
               Technician
             </span>
           </div>
@@ -193,10 +221,12 @@ export default function RegisterForm() {
           fontFamily: "var(--font-display)",
         }}
         onMouseOver={(e) =>
-          !pending && (e.currentTarget.style.backgroundColor = "var(--color-signal-600)")
+          !pending &&
+          (e.currentTarget.style.backgroundColor = "var(--color-signal-600)")
         }
         onMouseOut={(e) =>
-          !pending && (e.currentTarget.style.backgroundColor = "var(--color-primary)")
+          !pending &&
+          (e.currentTarget.style.backgroundColor = "var(--color-primary)")
         }
       >
         {pending ? (
@@ -210,32 +240,3 @@ export default function RegisterForm() {
     </form>
   );
 }
-
-export const registerAction = async (
-  prevState: RegisterState,
-  formData: FormData,
-) => {
-  const name = formData.get("name") as string;
-  const email = formData.get("email") as string;
-  const phone = formData.get("phone") as string;
-  const password = formData.get("password") as string;
-  const role = formData.get("role") as string;
-
-  const baseUrl = process.env.BACKEND_API_URL || 'http://localhost:5000';
-
-  try {
-    const res = await fetch(`${baseUrl}/api/auth/register`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      cache: "no-cache",
-      body: JSON.stringify({ name, email, phone, password, role }),
-    });
-
-    const result = await res.json();
-    return result;
-  } catch (error) {
-    return { success: false, message: "Network error occurred during registration." };
-  }
-};
