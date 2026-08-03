@@ -3,7 +3,7 @@
 export async function getTechnician(id:string){
 
     const res = await fetch(
-        `${process.env.BACKEND_API_URL}/api/technician/${id}`,
+        `${process.env.BACKEND_API_URL}/api/technician/info${id}`,
         {
             cache:"no-store"
         }

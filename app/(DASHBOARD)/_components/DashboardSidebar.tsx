@@ -36,6 +36,7 @@ export default function DashboardSidebar({ role = "CUSTOMER", isOpen = false, on
       { name: "Dashboard", href: "/technician-dashboard", icon: LayoutDashboard },
       { name: "Bookings", href: "/technician-dashboard/bookings", icon: Calendar },
       { name: "Availability", href: "/technician-dashboard/availability", icon: Clock },
+      { name: "Profile", href: "/technician-dashboard/profile", icon: Users },
 
     ],
     CUSTOMER: [
