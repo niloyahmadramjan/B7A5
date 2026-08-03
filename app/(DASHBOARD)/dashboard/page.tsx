@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { Calendar, CheckCircle2, Clock, XCircle, Star, ArrowRight, Shield } from "lucide-react";
-import { getMe } from "@/service/getMe";
+import { getInfo } from "@/service/getInfo";
 
 export default async function DashboardMainPage() {
-  const response = await getMe();
+  const response = await getInfo();
   const profile = response?.data || response;
 
   if (!profile || !profile.id) {

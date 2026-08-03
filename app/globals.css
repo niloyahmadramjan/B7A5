@@ -2,26 +2,22 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-@custom-variant dark (&:is(.dark *));
-
 /* ==========================================================================
-   FixItNow — Design Tokens & Global Styles
-   Palette rationale: workwear/toolbox vernacular instead of generic SaaS colors.
-   Navy = trust & trade professionalism. Signal orange = urgency ("Now"),
-   pulled from work-glove/hi-vis orange rather than a generic brand accent.
+   FixItNow — Design Tokens & Global Styles (Light Mode Fixed)
    ========================================================================== */
+   @custom-variant dark (&:is(.dark *));
 :root {
-  /* --- Brand palette --- */
-  --color-navy:  #ffffff; /* primary — headers, navbar, footer bg */
-  --color-navy-700:  #ffffff; /* hover/raised surfaces on navy */
-  --color-steel: #4a6580; /* secondary text, borders, muted icons */
-  --color-steel-200: #c6d2da; /* light borders/dividers on mist bg */
-  --color-signal: #f2542d; /* accent — CTAs, "Now", active states */
-  --color-signal-600: #d8431f; /* accent hover/pressed */
-  --color-mist: #f5f3ef; /* app background */
-  --color-surface: #ffffff; /* cards, panels */
-  --color-ink: #16202b; /* body text */
-  --color-ink-muted: #5b6b78; /* secondary text */
+  /* --- Light Mode (Default) --- */
+  --color-navy: #16202b; 
+  --color-navy-700: #0f1721;
+  --color-steel: #4a6580; 
+  --color-steel-200: #cbd5e1; 
+  --color-signal: #f2542d; 
+  --color-signal-600: #d8431f; 
+  --color-mist: #f8fafc; 
+  --color-surface: #ffffff; 
+  --color-ink: #1e293b; 
+  --color-ink-muted: #64748b;
 
   /* --- Booking status badges (from the spec) --- */
   --status-requested-bg: #fff1d6;
@@ -51,49 +47,35 @@
   --shadow-card:
     0 1px 2px rgba(15, 37, 64, 0.06), 0 4px 16px rgba(15, 37, 64, 0.06);
   --shadow-raised: 0 8px 24px rgba(15, 37, 64, 0.12);
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
+  
+  --background: #f8fafc;
+  --foreground: #1e293b;
+  --card: #ffffff;
+  --card-foreground: #1e293b;
+  --popover: #ffffff;
+  --popover-foreground: #1e293b;
+  --primary: #f2542d;
+  --primary-foreground: #ffffff;
+  --secondary: #f1f5f9;
+  --secondary-foreground: #1e293b;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #f1f5f9;
+  --accent-foreground: #1e293b;
+  --destructive: #ef4444;
+  --border: #cbd5e1;
+  --input: #cbd5e1;
+  --ring: #f2542d;
+  
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-}
-
-/* Dark mode: flip surfaces, keep signal orange as the one constant accent */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-mist: #0b1620;
-    --color-surface: #12222f;
-    --color-ink: #eaeef1;
-    --color-ink-muted: #2c4152;
-    --color-steel-200: #24384a;
-  }
+  --sidebar: #ffffff;
+  --sidebar-foreground: #1e293b;
+  --sidebar-primary: #f2542d;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f1f5f9;
+  --sidebar-accent-foreground: #1e293b;
+  --sidebar-border: #cbd5e1;
+  --sidebar-ring: #f2542d;
 }
 
 * {
@@ -102,12 +84,9 @@
 
 html,
 body {
-  padding: 0;
-  margin: 0;
-  background: var(--color-mist);
+  background-color: var(--color-mist);
   color: var(--color-ink);
-  font-family: var(--font-body);
-  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 h1,
@@ -121,8 +100,6 @@ h4 {
   margin: 0 0 0.5em;
 }
 
-
-
 /* Respect reduced-motion preference across the app */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -134,7 +111,7 @@ h4 {
   }
 }
 
-/* Visible keyboard focus everywhere — don't rely on browser default */
+/* Visible keyboard focus everywhere */
 :focus-visible {
   outline: 2px solid var(--color-signal);
   outline-offset: 2px;
@@ -174,7 +151,7 @@ h4 {
   cursor: pointer;
 }
 
-/* --- Status badges: map directly to the booking lifecycle --- */
+/* --- Status badges --- */
 
 .badge {
   display: inline-flex;
@@ -260,37 +237,20 @@ h4 {
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --color-mist: #0b1620;
+  --color-surface: #12222f;
+  --color-ink: #eaeef1;
+  --color-ink-muted: #2c4152;
+  --color-steel-200: #24384a;
+  --color-navy: #ffffff;
+  
+  --background: #0b1620;
+  --foreground: #eaeef1;
+  --card: #12222f;
+  --card-foreground: #eaeef1;
+  --popover: #12222f;
+  --popover-foreground: #eaeef1;
+  --border: #24384a;
 }
 
 @layer base {

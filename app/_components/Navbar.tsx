@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { UserApiResponse } from "@/types/usertype";
 import { userLogout } from "@/service/logout";
+import ThemeToggle from "./ThemeToggle";
 
 interface NavbarProps {
   /** Accepts either the raw API response object or the nested user data directly */
@@ -92,6 +93,9 @@ export default function Navbar({ userData }: NavbarProps) {
 
           {/* User Auth Section (Desktop) */}
           <div className="hidden md:flex items-center gap-4">
+            <div className="flex items-center gap-3 ml-auto ">
+                      <ThemeToggle />
+                    </div>
             {userData?.success ? (
               <div className="relative">
                 <button
@@ -100,17 +104,18 @@ export default function Navbar({ userData }: NavbarProps) {
                   }
                   className="flex items-center gap-3 p-1.5 rounded-full hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-white/20"
                 >
+
                   <div
-                    className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-white uppercase text-sm border-2"
+                    className="w-10 h-10 rounded-full flex items-center justify-center font-bold uppercase text-sm border-2"
                     style={{
                       backgroundColor: "var(--color-signal)",
-                      borderColor: "var(--color-surface)",
+                      borderColor: "var(--color-primary)",
                     }}
                   >
                     {userData.success ? userData.data.name.charAt(0) : "U"}
                   </div>
                   <div className="text-left pr-2">
-                    <p className="text-sm font-semibold text-white capitalize leading-tight">
+                    <p className="text-sm font-semibold  capitalize leading-tight">
                       {userData.success ? userData.data.name : "User"}
                     </p>
                     <span
