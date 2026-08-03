@@ -1,5 +1,6 @@
 'use server';
 
+import { getAccessToken } from '@/utils/getAccessToken';
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/dist/server/request/cookies';
 
@@ -7,14 +8,13 @@ const BASE_URL = process.env.BACKEND_API_URL;
 
 // Fetch profile data
 export async function getMyProfile() {
-   const cookieStore = await cookies();
-    const accessToken = cookieStore.get('accessToken')?.value || '';
+
   try {
     const response = await fetch(`${BASE_URL}/api/technician/my-profile`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${accessToken}`
+        'Authorization': `Bearer ${await getAccessToken()}`
       },
       cache: 'no-store',
     });
@@ -39,14 +39,12 @@ export async function updateTechnicianProfile(formData: {
   location: string;
 }) {
 
-     const cookieStore = await cookies();
-    const accessToken = cookieStore.get('accessToken')?.value || '';
   try {
     const response = await fetch(`${BASE_URL}/api/technician/profile`, { // Adjust endpoint if different
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${accessToken}`
+        'Authorization': `Bearer ${await getAccessToken()}`
       },
       body: JSON.stringify(formData),
     });
