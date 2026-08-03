@@ -11,7 +11,8 @@ import {
   Calendar, 
   Wrench, 
   CreditCard,
-  X
+  X,
+  Clock
 } from "lucide-react";
 
 interface SidebarProps {
@@ -35,7 +36,9 @@ export default function DashboardSidebar({ role = "CUSTOMER", isOpen = false, on
       { name: "Dashboard", href: "/technician-dashboard", icon: LayoutDashboard },
       { name: "My Jobs", href: "/technician-dashboard/jobs", icon: Briefcase },
       { name: "Schedule", href: "/technician-dashboard/schedule", icon: Calendar },
-      { name: "Earnings", href: "/technician-dashboard/earnings", icon: CreditCard },
+      { name: "Earnings", href: "/technician-dashboard/earnings", icon: CreditCard }, 
+      { name: "Availability", href: "/technician-dashboard/availability", icon: Clock },
+
     ],
     CUSTOMER: [
       { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },

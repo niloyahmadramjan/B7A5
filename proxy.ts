@@ -3,7 +3,7 @@ import { JwtPayload } from "jsonwebtoken";
 import { jwtUtils } from "./utils/jwt";
 import { getNewAccessToken } from "./service/refreshToken";
 
-const AUTH_ROUTES = ["/login", "/register"];
+const AUTH_ROUTES = ["/login", "/register", "/forgot-password", "/reset-password", "/verify-email"];
 
 const PUBLIC_ROUTES = ["/", "/services"];
 
