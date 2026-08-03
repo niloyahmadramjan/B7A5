@@ -15,7 +15,8 @@ import {
   PlusCircle, 
   CalendarCheck, 
   CalendarClock, 
-  UserCircle
+  UserCircle,
+  Layers
 } from "lucide-react";
 
 interface SidebarProps {
@@ -33,7 +34,7 @@ export default function DashboardSidebar({ role = "CUSTOMER", isOpen = false, on
       { name: "Dashboard", href: "/admin-dashboard", icon: LayoutDashboard },
       { name: "All Users", href: "/admin-dashboard/users", icon: Users },
       { name: "Manage Services", href: "/admin-dashboard/services", icon: Wrench },
-      { name: "Settings", href: "/admin-dashboard/settings", icon: Settings },
+      { name: "Categories", href: "/admin-dashboard/categories", icon: Layers },
     ],
    TECHNICIAN: [
       { name: "Dashboard", href: "/technician-dashboard", icon: LayoutDashboard },

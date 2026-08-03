@@ -18,7 +18,7 @@ export default function DashboardClient({ overviewData }: { overviewData: any })
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-gray-100">
-              Welcome back, {profile?.name || 'Technician'}! 👋
+              Welcome back, {profile?.name || 'Technician'}!
             </h2>
           </div>
           <p className="text-xs text-gray-500 dark:text-gray-400 flex flex-wrap items-center gap-3 pt-1">
