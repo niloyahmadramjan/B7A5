@@ -79,7 +79,7 @@ export async function payBookingAction(bookingId: string) {
   }
 
   const json = await res.json();
-  console.log(json);
+  // console.log(json);
 
   if (json.data.result.checkoutUrl) {
     redirect(json.data.result.checkoutUrl);
