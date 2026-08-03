@@ -60,6 +60,8 @@ export const registerAction = async (
   const email = formData.get("email") as string;
   const phone = formData.get("phone") as string;
   const password = formData.get("password") as string;
+  const role = formData.get("role") as string;
+
 
   const res = await fetch(`${process.env.BACKEND_API_URL}/api/auth/register`, {
     method: "POST",
@@ -67,7 +69,7 @@ export const registerAction = async (
       "content-type": "application/json",
     },
     cache: "no-cache",
-    body: JSON.stringify({ name, email, phone, password }),
+    body: JSON.stringify({ name, email, phone, password, role }),
   });
 
   const result = await res.json();
