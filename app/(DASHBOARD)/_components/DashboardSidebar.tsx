@@ -4,15 +4,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { 
-  LayoutDashboard, 
   Users, 
   Settings, 
-  Briefcase, 
   Calendar, 
   Wrench, 
   CreditCard,
   X,
-  Clock
+  LayoutDashboard, 
+  Briefcase, 
+  PlusCircle, 
+  CalendarCheck, 
+  CalendarClock, 
+  UserCircle
 } from "lucide-react";
 
 interface SidebarProps {
@@ -32,14 +35,13 @@ export default function DashboardSidebar({ role = "CUSTOMER", isOpen = false, on
       { name: "Manage Services", href: "/admin-dashboard/services", icon: Wrench },
       { name: "Settings", href: "/admin-dashboard/settings", icon: Settings },
     ],
-    TECHNICIAN: [
+   TECHNICIAN: [
       { name: "Dashboard", href: "/technician-dashboard", icon: LayoutDashboard },
-      { name: "My Services", href: "/technician-dashboard/services", icon: Wrench },
-      { name: "Create Services", href: "/technician-dashboard/create-service", icon: Wrench },
-      { name: "Bookings", href: "/technician-dashboard/bookings", icon: Calendar },
-      { name: "Availability", href: "/technician-dashboard/availability", icon: Clock },
-      { name: "Profile", href: "/technician-dashboard/profile", icon: Users },
-
+      { name: "My Services", href: "/technician-dashboard/services", icon: Briefcase },
+      { name: "Create Services", href: "/technician-dashboard/create-service", icon: PlusCircle },
+      { name: "Bookings", href: "/technician-dashboard/bookings", icon: CalendarCheck },
+      { name: "Availability", href: "/technician-dashboard/availability", icon: CalendarClock },
+      { name: "Profile", href: "/technician-dashboard/profile", icon: UserCircle },
     ],
     CUSTOMER: [
       { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
