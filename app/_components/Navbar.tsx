@@ -108,15 +108,15 @@ export default function Navbar({ userData }: NavbarProps) {
             </Link>
 
             <Link
-              href="/#how-it-works"
+              href="/categories"
               className={`text-sm font-medium transition-colors hover:opacity-80 relative py-1 ${
-                isActive("/#how-it-works") ? "font-bold" : ""
+                isActive("/categories") ? "font-bold" : ""
               }`}
               style={{ 
-                color: isActive("/#how-it-works") ? "var(--color-signal)" : "var(--color-ink-muted, #4b5563)" 
+                color: isActive("/categories") ? "var(--color-signal)" : "var(--color-ink-muted, #4b5563)" 
               }}
             >
-              How It Works
+              Categories
             </Link>
           </div>
 

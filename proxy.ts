@@ -5,7 +5,7 @@ import { getNewAccessToken } from "./service/refreshToken";
 
 const AUTH_ROUTES = ["/login", "/register", "/forgot-password", "/reset-password", "/verify-email"];
 
-const PUBLIC_ROUTES = ["/", "/services"];
+const PUBLIC_ROUTES = ["/", "/services","/categories", "/about", "/contact", "/faq", "/privacy-policy", "/terms-of-service"];
 
 function redirect(request: NextRequest, path: string, response?: NextResponse) {
   const redirectResponse = NextResponse.redirect(new URL(path, request.url));
